@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+    <h1>Dashboard</h1>
+
+    <p>
+
+    Welcome
+
+    {{ request.user.username }}
+
+    </p>
+
+    <hr>
+
+    <ul>
+
+    <li>
+
+    <a href="{% url 'car_list' %}">
+
+    Luxury Showroom
+
+    </a>
+
+    </li>
+
+    <li>
+
+    <a href="{% url 'book_service' %}">
+
+    Garage Service
+
+    </a>
+
+    </li>
+
+    <li>
+
+    <a href="{% url 'my_bookings' %}">
+
+    My Purchase Bookings
+
+    </a>
+
+    </li>
+
+    <li>
+
+    <a href="{% url 'my_services' %}">
+
+    My Service Requests
+
+    </a>
+
+    </li>
+
+    <li>
+
+    <a href="{% url 'logout' %}">
+
+    Logout
+
+    </a>
+
+    </li>
+
+    </ul>
+{% endblock %}

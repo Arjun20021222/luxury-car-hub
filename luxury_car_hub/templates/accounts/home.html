@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+    <hr>
+
+    <h2>Welcome to Luxury Car Hub</h2>
+
+    <p>Your one-stop destination for luxury cars.</p>
+
+    <ul>
+        <li><a href="{% url 'car_list'%}">Luxury Showroom</a></li>
+        <li><a href="{% url 'book_service'%}">Garage Services</a></li>
+    </ul>
+
+{% endblock %}

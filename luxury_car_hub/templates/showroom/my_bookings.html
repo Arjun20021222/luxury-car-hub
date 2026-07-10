@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}My Bookings{% endblock %}
+
+{% block content %}
+
+<h1>My Purchase Bookings</h1>
+
+<hr>
+
+{% for booking in bookings %}
+
+    <h2>
+
+        {{ booking.car.brand }}
+
+        {{ booking.car.model }}
+
+    </h2>
+
+    <p>
+
+        Phone :
+
+        {{ booking.phone }}
+
+    </p>
+
+    <p>
+
+        Status :
+
+        {{ booking.status }}
+
+    </p>
+
+    <p>
+
+        Booking Date :
+
+        {{ booking.booking_date }}
+
+    </p>
+
+    <hr>
+
+{% empty %}
+
+    <h2>
+
+        No Bookings Yet
+
+    </h2>
+
+{% endfor %}
+
+{% endblock %}

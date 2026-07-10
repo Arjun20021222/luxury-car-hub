@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+My Services
+
+{% endblock %}
+
+{% block content %}
+
+<h2>My Garage Service Requests</h2>
+
+<hr>
+
+{% for service in services %}
+
+<div class="card mb-3">
+
+    <div class="card-body">
+
+        <h4>
+
+            {{ service.car_brand }}
+
+            {{ service.car_model }}
+
+        </h4>
+
+        <p>
+
+            Registration :
+
+            {{ service.registration_number }}
+
+        </p>
+
+        <p>
+
+            Problem :
+
+            {{ service.problem_description }}
+
+        </p>
+
+        <p>
+
+            Preferred Date :
+
+            {{ service.preferred_service_date }}
+
+        </p>
+
+        <p>
+
+            Status :
+
+            <strong>
+
+                {{ service.status }}
+
+            </strong>
+
+        </p>
+
+    </div>
+
+</div>
+
+{% empty %}
+
+<h3>No Service Requests</h3>
+
+{% endfor %}
+
+{% endblock %}

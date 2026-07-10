@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+Book Service
+
+{% endblock %}
+
+{% block content %}
+
+<h2>Garage Service Booking</h2>
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button class="btn btn-primary">
+
+        Book Service
+
+    </button>
+
+</form>
+
+{% endblock %}
