@@ -80,8 +80,12 @@ WSGI_APPLICATION = 'luxury_car_hub.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'luxury_car_hub',
+        'USER': 'postgres',
+        'PASSWORD': '1234',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -127,6 +131,6 @@ MEDIA_URL="media/"
 MEDIA_ROOT=BASE_DIR/"media"
 
 REST_FRAMEWORK={
-    "DEFAULT_PAGINATION_CLASS":"rest_framework.pagination.PagenumberPagination",
+    "DEFAULT_PAGINATION_CLASS":"rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE":5,
 }
