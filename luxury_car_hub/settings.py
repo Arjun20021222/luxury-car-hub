@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 from decouple import config
 from pathlib import Path
-
+from dj_database_url import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,7 +24,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [".onrender.com","localhost","127.0.0.1",]
 
 
 # Application definition
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -81,14 +82,10 @@ WSGI_APPLICATION = 'luxury_car_hub.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": config("DB_NAME"),
-        "USER": config("DB_USER"),
-        "PASSWORD": config("DB_PASSWORD"),
-        "HOST": config("DB_HOST"),
-        "PORT": config("DB_PORT"),
-    }
+    "default": dj_database_url.config(
+        default=f"postgresql://{config('DB_USER')}:{config('DB_PASSWORD')}@{config('DB_HOST')}:{config('DB_PORT')}/{config('DB_NAME')}",
+        conn_max_age=600,
+    )
 }
 
 
@@ -126,7 +123,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
 LOGIN_URL="login"
 
 MEDIA_URL="media/"
@@ -148,8 +157,8 @@ REST_FRAMEWORK={
     "DEFAULT_SCHEMA_CLASS":"drf_spectacular.openapi.AutoSchema",
 }
 
-SPECTACULAR_SETTINGS={
-    "Title":"Luxury Car Hub API",
-    "Description":"REST API for Luxury Car Hub",
-    "VERSION":"1.0.0",
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Luxury Car Hub API",
+    "DESCRIPTION": "REST API for Luxury Car Hub",
+    "VERSION": "1.0.0",
 }
