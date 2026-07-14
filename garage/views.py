@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from .forms import ServiceBookingForm
 from django.contrib.auth.decorators import login_required
 from .models import ServiceBooking
-
+from django.contrib import messages
 
 @login_required
 def book_service(request):
@@ -12,7 +12,7 @@ def book_service(request):
             booking=form.save(commit=False)
             booking.user=request.user
             booking.save()
-
+            messages.success(request,"Service Booking submitted")
             return redirect("dashboard")
     else:
         form=ServiceBookingForm()

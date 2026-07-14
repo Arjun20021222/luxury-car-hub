@@ -24,15 +24,19 @@
 <p>{{ car.description }}</p>
 
 <hr>
+{% if car.available %}
 
-<a href="{% url 'book_car' car.id %}">
+    <a href="{% url 'book_car' car.id %}" class="btn btn-success">
+        Book Now
+    </a>
 
-<button>
+{% else %}
 
-Book This Car
+    <button class="btn btn-danger" disabled>
+        Sold Out
+    </button>
 
-</button>
-</a>
+{% endif %}
 
 <br><br>
 

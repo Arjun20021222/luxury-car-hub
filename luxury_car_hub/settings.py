@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'showroom',
     'rentals',
     'api',
+    'student',
+    'django_filters',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -131,5 +134,22 @@ MEDIA_ROOT=BASE_DIR/"media"
 
 REST_FRAMEWORK={
     "DEFAULT_PAGINATION_CLASS":"rest_framework.pagination.PageNumberPagination",
-    "PAGE_SIZE":5,
+    "PAGE_SIZE":2,
+    "DEFAULT_AUTHENTICATION_CLASSES":(
+        "rest_framework_simplejwt.authentication.JWTAuthentication",),
+    "DEFAULT_THROTTLE_CLASSES":[
+        "rest_framework.throttling.AnonRateThrottle",
+        "rest_framework.throttling.UserRateThrottle",
+    ],
+    "DEFAULT_THROTTLE_RATES":{
+        "anon":"20/minute",
+        "user":"100/minute",
+    },
+    "DEFAULT_SCHEMA_CLASS":"drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS={
+    "Title":"Luxury Car Hub API",
+    "Description":"REST API for Luxury Car Hub",
+    "VERSION":"1.0.0",
 }

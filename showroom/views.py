@@ -2,6 +2,7 @@ from django.shortcuts import render,get_object_or_404,redirect
 from .models import Car,PurchaseBooking
 from .forms import PurchaseBookingForm
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 def car_list(request):
     cars=Car.objects.all()
@@ -15,6 +16,24 @@ def car_detail(request,pk):
 def book_car(request,pk):
     car=get_object_or_404(Car,id=pk)
 
+    if not car.available:
+        messages.error(
+            request,"This car is currently unavailable"
+        )
+        return redirect("car_detail",pk=car.id)
+    
+    if PurchaseBooking.objects.filter(
+        user=request.user,
+        car=car
+    ).exists():
+
+        messages.error(
+            request,
+            "You have already booked this car."
+        )
+
+        return redirect("car_detail", pk=car.id)
+    
     if request.method=='POST':
         form=PurchaseBookingForm(request.POST)
         if form.is_valid():
@@ -22,6 +41,9 @@ def book_car(request,pk):
             booking.user=request.user
             booking.car=car
             booking.save()
+            car.available=False
+            car.save()
+            messages.success(request,"Your Booking has been submitted successfully.")
             return redirect("car_detail",pk=car.id)
     else:
         form=PurchaseBookingForm()

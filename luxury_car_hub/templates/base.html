@@ -2,6 +2,8 @@
 <html>
 
 <head>
+    <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -18,68 +20,177 @@
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+
     <div class="container">
 
-        <a class="navbar-brand" href="{% url 'home' %}">
-            Luxury Car Hub
+        <a class="navbar-brand fw-bold" href="{% url 'home' %}">
+            🚗 Luxury Car Hub
         </a>
 
-        <div class="navbar-nav ms-auto">
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
 
-            <a class="nav-link" href="{% url 'home' %}">
-                Home
-            </a>
+            <span class="navbar-toggler-icon"></span>
 
-            <a class="nav-link" href="{% url 'car_list' %}">
-                Showroom
-            </a>
+        </button>
 
-            {% if request.user.is_authenticated %}
+        <div class="collapse navbar-collapse" id="navbarNav">
 
-                <a class="nav-link" href="{% url 'dashboard' %}">
-                    Dashboard
-                </a>
+            <ul class="navbar-nav ms-auto align-items-center">
 
-                <a class="nav-link" href="{% url 'logout' %}">
-                    Logout
-                </a>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">
+                        Home
+                    </a>
+                </li>
 
-            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'car_list' %}">
+                        Showroom
+                    </a>
+                </li>
 
-                <a class="nav-link" href="{% url 'login' %}">
-                    Login
-                </a>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'book_service' %}">
+                        Garage
+                    </a>
+                </li>
 
-                <a class="nav-link" href="{% url 'register' %}">
-                    Register
-                </a>
+                <li class="nav-item">
+                    <a class="nav-link" href="/swagger/">
+                        API Docs
+                    </a>
+                </li>
 
-            {% endif %}
+                {% if request.user.is_authenticated %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dashboard' %}">
+                            Dashboard
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <span class="text-light me-3">
+                            Hello, {{ request.user.username }}
+                        </span>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="btn btn-outline-light btn-sm"
+                           href="{% url 'logout' %}">
+                            Logout
+                        </a>
+                    </li>
+
+                {% else %}
+
+                    <li class="nav-item">
+                        <a class="btn btn-outline-light btn-sm me-2"
+                           href="{% url 'login' %}">
+                            Login
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="btn btn-warning btn-sm"
+                           href="{% url 'register' %}">
+                            Register
+                        </a>
+                    </li>
+
+                {% endif %}
+
+            </ul>
 
         </div>
 
     </div>
-</nav>
 
-<div class="container mt-4">
+</nav>
+<div class="container mt-3">
+
+    {% if messages %}
+
+        {% for message in messages %}
+
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm">
+
+                {{ message }}
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert">
+                </button>
+
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+
+</div>
+<div class="container py-5">
 
     {% block content %}
 
     {% endblock %}
 
 </div>
-<footer>
+<footer class="bg-dark text-light mt-5 py-4">
 
-<p>
+    <div class="container text-center">
 
-© Luxury Car Hub 2026
+        <h5>Luxury Car Hub</h5>
 
-</p>
+        <p>
+
+            Premium Luxury Cars • Professional Garage Services
+
+        </p>
+
+        <small>
+
+            Built with Django • Django REST Framework • PostgreSQL • JWT
+
+        </small>
+
+        <br><br>
+
+        <small>
+
+            © 2026 Luxury Car Hub
+
+        </small>
+
+    </div>
 
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+setTimeout(function () {
 
+    let alerts = document.querySelectorAll(".alert");
+
+    alerts.forEach(function(alert){
+
+        alert.style.transition = "0.5s";
+
+        alert.style.opacity = "0";
+
+        setTimeout(function(){
+
+            alert.remove();
+
+        },500);
+
+    });
+
+},4000);
+</script>
 </body>
 
 </html>
